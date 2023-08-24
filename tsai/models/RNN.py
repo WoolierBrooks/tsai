@@ -9,8 +9,8 @@ from .layers import *
 from .utils import *
 
 # %% ../../nbs/042_models.RNN.ipynb 4
-class _RNN_Base(Module):
-    def __init__(self, c_in, c_out, hidden_size=100, n_layers=1, bias=True, rnn_dropout=0, bidirectional=False, fc_dropout=0., init_weights=True):
+class _RNN_Base(Module): #hidden_size=100, bias=True, fc_dropout=0., init_weights=True
+    def __init__(self, c_in, c_out, hidden_size=1, n_layers=1, bias=False, rnn_dropout=0, bidirectional=False, fc_dropout=0.5, init_weights=False):
         self.rnn = self._cell(c_in, hidden_size, num_layers=n_layers, bias=bias, batch_first=True, dropout=rnn_dropout, 
                               bidirectional=bidirectional)
         self.dropout = nn.Dropout(fc_dropout) if fc_dropout else nn.Identity()
@@ -47,5 +47,5 @@ class RNN(_RNN_Base):
 class LSTM(_RNN_Base):
     _cell = nn.LSTM
     
-class GRU(_RNN_Base):
+class GRU(_RNN_Base): 
     _cell = nn.GRU
